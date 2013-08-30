@@ -1,5 +1,21 @@
 apply plugin: 'java'
+apply plugin: 'shadow'
 apply from: "./libraries.gradle"
+
+
+// include shadow plugin
+buildscript {
+    repositories {
+        maven {
+            name 'Gradle Shadow'
+            url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins'
+        }
+    }
+    dependencies {
+        classpath 'org.gradle.plugins:shadow:0.7.4'
+    }
+}
+
 
 project.ext {
     sourceCompatibility = 1.7
@@ -72,6 +88,20 @@ subprojects { subProject ->
 }
 
 
+shadow {
+    include 'META-INF/MANIFEST.MF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+}
+
 test {
     useTestNG()
+}
+
+
+jar {
+    manifest {
+        // set the main class name accordingly
+        attributes 'Main-Class': ''
+    }
 }
