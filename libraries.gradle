@@ -8,6 +8,13 @@ ext {
 
     libraries = [
 
+            springBootWeb: [
+                    dependencies.create("org.springframework.boot:spring-boot-starter-web", { exclude module: "spring-boot-starter-tomcat" }),
+                    dependencies.create("org.springframework.boot:spring-boot-starter-jetty")
+            ],
+
+            springBootActuator:     dependencies.create("org.springframework.boot:spring-boot-starter-actuator"),
+
             // logging
             logback:                dependencies.create("ch.qos.logback:logback-classic:${logbackVersion}"),
 

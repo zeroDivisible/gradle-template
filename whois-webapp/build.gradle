@@ -1,7 +1,8 @@
-dependencies {
 
+dependencies {
+    compile libraries.springBootWeb
 }
 
 jar {
-    baseName = 'core'
+    baseName = 'whois-webapp'
 }

@@ -3,8 +3,7 @@ apply plugin: 'spring-boot'
 apply from: "./libraries.gradle"
 
 project.ext {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    javaLanguageLevel = '1.8'
 }
 
 buildscript {
@@ -13,23 +12,8 @@ buildscript {
     }
 
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE")
     }
-}
-
-
-
-dependencies {
-    // tag::jetty[]
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
-    compile("org.springframework.boot:spring-boot-starter-jetty")
-    // end::jetty[]
-
-    // tag::actuator[]
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
 }
 
 
@@ -49,9 +33,20 @@ subprojects { subProject ->
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'eclipse'
+    apply plugin: 'spring-boot'
 
     targetCompatibility = rootProject.sourceCompatibility
     sourceCompatibility = rootProject.targetCompatibility
+
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE")
+        }
+    }
 
     idea {
         module {
@@ -87,7 +82,7 @@ subprojects { subProject ->
     }
 
     task createDirs {
-        description =  "creates basic directory structure for given project"
+        description = "creates basic directory structure for given project"
 
         sourceSets*.java.srcDirs*.each {
             it.mkdirs()
