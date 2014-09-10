@@ -1,6 +1,10 @@
 .build.gradle.un~
 .idea/
 *.iml
+
+# don'tr track both gradle dir and gradle wrapper
 .gradle/
+gradle/
+
 build
 out/*

@@ -1,9 +1,9 @@
 
 ext {
-    festAssertionsVersion = '1.4'
-    logbackVersion = '1.0.13'
+    assertJVersion = '1.6.1'
+    junitVersion = '4.11'
+    logbackVersion = '1.1.2'
     mockitoVersion = '1.9.5'
-    testNgVersion = '6.8.5'
 
 
     libraries = [
@@ -12,9 +12,8 @@ ext {
             logback:                dependencies.create("ch.qos.logback:logback-classic:${logbackVersion}"),
 
             // test
-            testNg:                 dependencies.create("org.testng:testng:${testNgVersion}"),
-            festAssertions:         dependencies.create("org.easytesting:fest-assert:${festAssertionsVersion}"),
+            assertJ:                dependencies.create("org.assertj:assertj-core:${assertJVersion}"),
             mockito:                dependencies.create("org.mockito:mockito-all:${mockitoVersion}"),
-
+            junit:                  dependencies.create("junit:junit:${junitVersion}"),
     ]
 }

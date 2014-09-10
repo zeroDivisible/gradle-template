@@ -1,10 +1,37 @@
 apply plugin: 'java'
+apply plugin: 'spring-boot'
 apply from: "./libraries.gradle"
 
 project.ext {
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE"
+    }
+}
+
+
+
+dependencies {
+    // tag::jetty[]
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    // end::jetty[]
+
+    // tag::actuator[]
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    // end::actuator[]
+}
+
 
 allprojects {
     repositories {
@@ -21,6 +48,7 @@ allprojects {
 subprojects { subProject ->
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'eclipse'
 
     targetCompatibility = rootProject.sourceCompatibility
     sourceCompatibility = rootProject.targetCompatibility
@@ -38,9 +66,9 @@ subprojects { subProject ->
         compile libraries.logback
 
         // testing
-        testCompile libraries.festAssertions
+        testCompile libraries.assertJ
         testCompile libraries.mockito
-        testCompile libraries.testNg
+        testCompile libraries.junit
     }
 
     sourceSets {
@@ -58,7 +86,7 @@ subprojects { subProject ->
         }
     }
 
-    task "create-dirs"  {
+    task createDirs {
         description =  "creates basic directory structure for given project"
 
         sourceSets*.java.srcDirs*.each {
@@ -71,7 +99,7 @@ subprojects { subProject ->
     }
 }
 
-
-test {
-    useTestNG()
+// task for setting up gradle wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
 }
